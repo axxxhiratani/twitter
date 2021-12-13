@@ -1,9 +1,10 @@
 <template>
   <div class="main">
     <Header></Header>
-    <Login></Login>
+    <Register></Register>
   </div>
 </template>
+
 <style scoped>
 .main{
   background: #000;
