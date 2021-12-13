@@ -17,6 +17,13 @@ export default {
     }
   },
   methods:{
+    async preparation(){
+      await this.getAuth();
+      while(this.user ==null){
+        await this.getUser();
+      }
+    },
+
     getAuth(){
       firebase.auth().onAuthStateChanged((user) => {
         this.uid = user.uid;
@@ -34,10 +41,7 @@ export default {
     },
   },
   created(){
-    this.getAuth();
-    setTimeout(()=>{
-      this.getUser();
-    },500);
+    this.preparation();
   }
 }
 </script>

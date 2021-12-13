@@ -26,7 +26,7 @@
     <div class="post">
       <validation-observer ref="obs" v-slot="ObserverProps">
         <validation-provider v-slot="ProviderProps" rules="required|max:120">
-      <textarea v-model="post" class="input--text" cols="30" rows="10" name="投稿"></textarea>
+      <textarea v-model="post" class="input--text" id="input--text--post" cols="30" rows="10" name="投稿"></textarea>
           <div class="error">{{ ProviderProps.errors[0] }}</div>
         </validation-provider>
 
@@ -74,7 +74,10 @@ export default {
         content:this.post,
       };
       await this.$axios.post("http://127.0.0.1:8000/api/v1/post",resData);
-      this.post = "";
+      var formElement = document.getElementById('input--text--post');
+      console.log(formElement);
+      formElement.value = '';
+
       if(this.comment == "false"){
         location.reload();
       }else{
@@ -84,12 +87,6 @@ export default {
 
   },
   created() {
-    // firebase.auth().onAuthStateChanged((user) => {
-    //   if (user) {
-    //     this.message = 'ログイン済みです';
-    //     this.user = user.uid;
-    //   }
-    // })
   },
 }
 </script>

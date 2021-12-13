@@ -40,7 +40,7 @@
 
       <validation-observer ref="obs" v-slot="ObserverProps">
         <validation-provider v-slot="ProviderProps" rules="required|max:120">
-          <input type="text" class="input--text" v-model="post_value" name="コメント">
+          <input type="text" class="input--text" id="input--text" v-model="post_value" name="コメント">
           <div class="error">{{ ProviderProps.errors[0] }}</div>
         </validation-provider>
 
@@ -89,7 +89,9 @@ export default {
         content:this.post_value,
       };
       await this.$axios.post("http://127.0.0.1:8000/api/v1/comment",sendData);
-      this.post_value = "";
+      var formElement = document.getElementById('input--text');
+      console.log(formElement);
+      formElement.value = '';
       this.getComment();
     },
     async getFavorite(){
@@ -141,19 +143,13 @@ export default {
       this.favorites.forEach(value =>{
         let target_post = value.post_id;
         let target_user = value.user_id;
-        console.log("testttttttttttttttt22222222222222222");
-        console.log(id);
         if(target_post == id && target_user == this.user.id){
           flg = false;
-          console.log("testtttttttttttt333333333333333");
-          console.log(id);
         }
       });
       return flg;
     },
     decorationFavorite(id){
-      console.log("testttttttttttttttt");
-      console.log(id);
       if(this.checkFavorite(id)){
         return "";
       }else{

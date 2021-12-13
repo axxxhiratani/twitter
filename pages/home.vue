@@ -15,12 +15,19 @@ export default {
     }
   },
   methods:{
+    async preparation(){
+      await this.getAuth();
+      while(this.user ==null){
+        await this.getUser();
+      }
+    },
     getAuth(){
       firebase.auth().onAuthStateChanged((user) => {
         this.uid = user.uid;
       });
     },
     async getUser(){
+
       const sendData = {
         uuid:this.uid,
       };
@@ -29,13 +36,11 @@ export default {
           params:sendData
         });
       this.user = resData.data.user[0];
+      console.log(`user:${this.user}`)
     },
   },
   created(){
-    this.getAuth();
-    setTimeout(()=>{
-      this.getUser();
-    },500);
+    this.preparation();
   }
 }
 </script>
